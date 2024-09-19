@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <button id="runProgram" onclick="playAudio();" class="runProgram-button">
+        Start
+      </button>
+    </div>
+
+    <script>
+      function playAudio() {
+        var msg = new SpeechSynthesisUtterance(
+          "Help me with this code please?"
+        );
+
+        window.speechSynthesis.speak(msg);
+
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+
+        msg.onend = function (e) {
+          var msg1 = new SpeechSynthesisUtterance(
+            "Now code plays audios for you"
+          );
+          msg1.voice = speechSynthesis.getVoices().filter(function (voice) {
+            return voice.name == "Whisper";
+          })[0];
+          msg1.pitch = 2; //0 to 2
+          msg1.rate = 1.2; //0 to 2
+          // start your audio loop.
+          speechSynthesis.speak(msg1);
+          console.log("Finished in " + e.elapsedTime + " seconds.");
+        };
+
+        speechSynthesis.speak(msg);
+      }
+    </script>
+  </body>
+</html>
